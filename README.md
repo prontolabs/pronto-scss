@@ -9,4 +9,4 @@ Pronto runner for [SCSS-Lint](https://github.com/causes/scss-lint), tool to help
 
 ## Configuration
 
-Configuring SCSS-Lint via .scss-lint.yml will work just fine with pronto-scss.
+Configuring SCSS-Lint via [.scss-lint.yml](https://github.com/causes/scss-lint#configuration) will work just fine with pronto-scss.
