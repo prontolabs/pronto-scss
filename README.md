@@ -10,3 +10,5 @@ Pronto runner for [SCSS-Lint](https://github.com/causes/scss-lint), tool to help
 ## Configuration
 
 Configuring SCSS-Lint via [.scss-lint.yml](https://github.com/causes/scss-lint#configuration) will work just fine with pronto-scss.
+
+When putting pronto-scss in your Gemfile, add `require: false`. SCSS-Lint monkey patches a number of classes, which can lead to trouble if always required.
