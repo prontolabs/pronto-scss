@@ -4,7 +4,9 @@ require 'scss_lint'
 module Pronto
   class Scss < Runner
     def initialize
-      config = SCSSLint::Config.load(SCSSLint::Config::FILE_NAME)
+      file_name = SCSSLint::Config::FILE_NAME
+      config = File.exists?(file_name) ? SCSSLint::Config.load(file_name)
+                                       : SCSSLint::Config.default
       @runner = SCSSLint::Runner.new(config)
     end
 
