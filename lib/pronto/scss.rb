@@ -5,8 +5,11 @@ module Pronto
   class Scss < Runner
     def initialize
       file_name = SCSSLint::Config::FILE_NAME
-      config = File.exists?(file_name) ? SCSSLint::Config.load(file_name)
-                                       : SCSSLint::Config.default
+      config = if File.exist?(file_name)
+                 SCSSLint::Config.load(file_name)
+               else
+                 SCSSLint::Config.default
+               end
       @runner = SCSSLint::Runner.new(config)
     end
 
@@ -14,9 +17,9 @@ module Pronto
       return [] unless patches
 
       scss_patches = patches.select { |patch| patch.additions > 0 }
-                            .select { |patch| scss_file?(patch.new_file_full_path) }
+        .select { |patch| scss_file?(patch.new_file_full_path) }
 
-      files = scss_patches.map { |patch| patch.new_file_full_path }
+      files = scss_patches.map(&:new_file_full_path)
 
       if files.any?
         @runner.run(files)
@@ -45,7 +48,8 @@ module Pronto
     end
 
     def new_message(line, lint)
-      Message.new(line.patch.delta.new_file[:path], line, lint.severity, lint.description)
+      Message.new(line.patch.delta.new_file[:path], line,
+                  lint.severity, lint.description)
     end
 
     def scss_file?(path)
