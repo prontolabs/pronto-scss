@@ -3,16 +3,6 @@ require 'scss_lint'
 
 module Pronto
   class Scss < Runner
-    def initialize
-      file_name = SCSSLint::Config::FILE_NAME
-      config = if File.exist?(file_name)
-                 SCSSLint::Config.load(file_name)
-               else
-                 SCSSLint::Config.default
-               end
-      @runner = SCSSLint::Runner.new(config)
-    end
-
     def run(patches, _)
       return [] unless patches
 
@@ -22,15 +12,30 @@ module Pronto
       files = scss_patches.map(&:new_file_full_path)
 
       if files.any?
-        @runner.run(files)
+        runner.run(files)
         messages_for(scss_patches)
       else
         []
       end
     end
 
+    def runner
+      @runner ||= SCSSLint::Runner.new(config)
+    end
+
+    def config
+      @config ||= begin
+        file_name = SCSSLint::Config::FILE_NAME
+        if File.exist?(file_name)
+          SCSSLint::Config.load(file_name)
+        else
+          SCSSLint::Config.default
+        end
+      end
+    end
+
     def messages_for(scss_patches)
-      @runner.lints.map do |lint|
+      runner.lints.map do |lint|
         patch = patch_for_lint(scss_patches, lint)
 
         line = patch.added_lines.find do |added_line|
