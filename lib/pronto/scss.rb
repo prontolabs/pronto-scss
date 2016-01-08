@@ -12,7 +12,11 @@ module Pronto
       files = scss_patches.map(&:new_file_full_path)
 
       if files.any?
-        runner.run(SCSSLint::FileFinder.new(config).find(files))
+        files_hash =
+          SCSSLint::FileFinder.new(config).find(files).map do |path|
+            { path: path }
+          end
+        runner.run(files_hash)
         messages_for(scss_patches)
       else
         []
