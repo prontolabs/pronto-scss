@@ -62,7 +62,17 @@ module Pronto
     end
 
     def scss_file?(path)
-      %w(.css .scss).include?(File.extname(path))
+      %w(.css .scss).include?(File.extname(path)) &&
+        scss_files_option_matches?(path)
+    end
+
+    def scss_files_option_matches?(path)
+      path_string = path.to_s
+      files = config.scss_files
+
+      # We use `end_with?` because `path` is a absolute path and the file paths
+      # of `config.scss_files` are relative ones
+      files.any? { |f| path_string.end_with?(f) }
     end
   end
 end
