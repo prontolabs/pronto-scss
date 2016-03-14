@@ -34,7 +34,7 @@ module Pronto
             'Each selector in a comma sequence should be on its own single line'
         end
 
-        context 'only one file with one smell included by `scss_files` option' do
+        context 'only one file with a smell included by `scss_files` option' do
           before(:all) do
             File.open('spec/.scss-lint.yml', 'w') do |file|
               file.write "scss_files: '**/world*scss'\n"
