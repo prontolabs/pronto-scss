@@ -2,10 +2,10 @@ require 'spec_helper'
 
 module Pronto
   describe Scss do
-    let(:scss) { Scss.new }
+    let(:scss) { Scss.new(patches) }
 
     describe '#run' do
-      subject { scss.run(patches, nil) }
+      subject { scss.run }
 
       context 'patches are nil' do
         let(:patches) { nil }
