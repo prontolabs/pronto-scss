@@ -25,7 +25,7 @@ module Pronto
     def config
       @config ||= begin
         file_name = SCSSLint::Config::FILE_NAME
-        if File.exist?(file_name)
+        if File.exist?(file_name) || File.symlink?(file_name)
           SCSSLint::Config.load(file_name)
         else
           SCSSLint::Config.default
