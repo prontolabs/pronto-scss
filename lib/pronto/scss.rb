@@ -8,7 +8,7 @@ module Pronto
 
       if files.any?
         files_hash =
-          SCSSLint::FileFinder.new(config).find(files).map do |path|
+          SCSSLint::FileFinder.new(scss_config).find(files).map do |path|
             { path: path }
           end
         runner.run(files_hash)
@@ -19,11 +19,11 @@ module Pronto
     end
 
     def runner
-      @runner ||= SCSSLint::Runner.new(config)
+      @runner ||= SCSSLint::Runner.new(scss_config)
     end
 
-    def config
-      @config ||= begin
+    def scss_config
+      @scss_config ||= begin
         file_name = SCSSLint::Config::FILE_NAME
         if File.exist?(file_name) || File.symlink?(file_name)
           SCSSLint::Config.load(file_name)
@@ -70,10 +70,10 @@ module Pronto
 
     def scss_files_option_matches?(path)
       path_string = path.to_s
-      files = config.scss_files
+      files = scss_config.scss_files
 
       # We use `end_with?` because `path` is a absolute path and the file paths
-      # of `config.scss_files` are relative ones
+      # of `scss_config.scss_files` are relative ones
       files.any? { |f| path_string.end_with?(f) }
     end
   end

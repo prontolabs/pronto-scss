@@ -44,7 +44,7 @@ module Pronto
           after(:all) { FileUtils.rm('spec/.scss-lint.yml') }
 
           before do
-            scss.should_receive(:config) do
+            scss.should_receive(:scss_config) do
               SCSSLint::Config.load('spec/.scss-lint.yml')
             end.at_least(:once)
           end
