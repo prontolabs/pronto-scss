@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
   s.author = 'Mindaugas Mozūras'
   s.email = 'mindaugas.mozuras@gmail.com'
-  s.homepage = 'http://github.com/mmozuras/pronto-scss'
+  s.homepage = 'http://github.com/prontolabs/pronto-scss'
   s.summary = <<-EOF
     Pronto runner for SCSS-Lint, tool to help keep your SCSS clean and readable
   EOF
